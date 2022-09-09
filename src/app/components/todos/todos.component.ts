@@ -8,7 +8,7 @@ import { Todo } from '../../models/todo';
 })
 export class TodosComponent implements OnInit {
   todos: Todo[] | undefined;
-
+  inputTodo: string = '';
   constructor() {}
 
   ngOnInit(): void {
@@ -19,8 +19,26 @@ export class TodosComponent implements OnInit {
       },
       {
         content: ' Second Todo',
-        completed: true,
+        completed: false,
       },
     ];
+  }
+  toggleDone(id: number): void {
+    this.todos?.map((value, index) => {
+      if (index == id) {
+        value.completed = !value.completed;
+      }
+    });
+  }
+  deleteTodo(id: number): void {
+    this.todos = this.todos?.filter((value, index) => index !== id);
+  }
+  addTodo(): void {
+    this.todos?.push({
+      content: this.inputTodo,
+      completed: false,
+    });
+
+    this.inputTodo = '';
   }
 }
